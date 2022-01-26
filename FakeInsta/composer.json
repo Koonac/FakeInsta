@@ -1,0 +1,24 @@
+{
+    "name": "ednilson/fake-insta",
+    "description": "Testando minhas habilidade com php e programa\u0000\u0000o orientada a objeto",
+    "license": "MIT",
+    "autoload": {
+        "psr-4": {
+            "Source\\": "source/"
+        },
+        "files": [
+            "source/Config.php"
+        ]
+    },
+    "authors": [
+        {
+            "name": "K0nac",
+            "email": "74104634+K0nac@users.noreply.github.com"
+        }
+    ],
+    "require": {
+        "coffeecode/datalayer": "1.1.*",
+        "coffeecode/router": "1.0.*"
+        
+    }
+}
