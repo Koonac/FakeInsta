@@ -57,18 +57,6 @@ CREATE TABLE `user` (
 -- Extraindo dados da tabela `user`
 --
 
-INSERT INTO `user` (`id`, `nome`, `login`, `senha`, `image`, `email`) VALUES
-(1, 'Henrique', 'Konac', '20511226a', 'null', 'Konac@outlook.com.br'),
-(2, 'Nome', 'User', 'Senha', NULL, 'Email'),
-(3, 'Teste 2', 'Teste 2', 'Teste 2', NULL, 'Teste 2'),
-(4, 'sadasdas', 'dasdasdas', 'dasdasd', NULL, 'dsadsad'),
-(5, 'sadasdas', 'dasdasdas', 'dasdasd', NULL, 'dsadsad'),
-(6, 'sadasdas', 'dasdasdas', 'dasdasd', NULL, 'dsadsad'),
-(7, 'tetste', ' teste ', 'teste ', NULL, 'Teste '),
-(8, 'PAblo escobar', 'Pablito', '20154569', NULL, 'Pablo'),
-(9, 'dsadas', 'dasdas', 'dads', NULL, 'Rodrigo'),
-(10, 'Ednilson Henrique', 'Rickplays', '20511226a', NULL, 'rick.plays@hotmail.com');
-
 --
 -- Índices para tabelas despejadas
 --
