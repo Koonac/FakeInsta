@@ -12,6 +12,6 @@ class User extends DataLayer{
 
     public function Posts()
     {
-            return (new Post())->find("id_userPost = uid", "uid={$this->id}")->fetch(true);
+            return (new Post())->find("id_userPost= :uid", "uid={$this->id}")->fetch();
     }
 }

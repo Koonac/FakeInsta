@@ -1,5 +1,4 @@
 <?php 
-session_start();
 
 $logado = $_SESSION['login'];
 $nomeUser = $_SESSION['nome'];
@@ -35,7 +34,7 @@ $count = $postBD->find()->count();
     <!-- =========================== -->
                 <!-- TOPO -->
     <!-- =========================== -->
-    <?php require __DIR__ ."/top.php"; ?>
+    <?php require __DIR__ ."/header.php"; ?>
 
     <!-- =========================== -->
                 <!-- Postar -->
@@ -59,15 +58,21 @@ $count = $postBD->find()->count();
         <!-- =========================== -->
         <div class="col-3 mt-5">
             <div class="row">
-                <div class="col-2">
-                    <i class="far fa-user-circle fa-4x"></i>
+                <div class="col-3 pb-4">
+                    <?php
+                        if($userProfile->image == null){
+                            echo "<i class='far fa-user-circle fa-4x m15'></i>";
+                        }else{
+                            echo "<img class='img' src='Source/Views/upload/profile/$userProfile->image'>";  
+                            }
+                    ?>
                 </div>
                 <div class="col-5">
                     <p><?php echo $logado ?></p>
                     <span><?php echo $nomeUser ?></span>
                 </div>
                 <div class="col-1 pt-3">
-                    <a href="<?php echo $url ?>/profile">Mudar</a>
+                    <a href="<?php echo $url ?>/profile">Perfil</a>
                     <a href="<?php echo $url ?>/sair">Sair</a>
                 </div>
             </div>
@@ -88,11 +93,17 @@ $count = $postBD->find()->count();
     <div class="row">
         <div class="offset-3 col-4 border rounded mt-4 posts">
             <div class="row">
-                <div class="col-1">
-                    <i class="far fa-user-circle fa-2x m15"></i>
+                <div class="col-1 pt-3">
+                    <?php
+                        if($postItem->User_post()->image == null){
+                            echo "<i class='far fa-user-circle fa-2x m15'></i>";
+                        }else{
+                            echo "<img class='img' src='Source/Views/upload/profile/{$postItem->User_post()->image}'>";  
+                            }
+                    ?>
                 </div>
-                <div class="col-4 mt-3">
-                    <?php echo $postItem->userPost; ?>
+                <div class="col-4 mt-3 ">
+                    <?php echo "<strong>{$postItem->User_post()->login} </strong>"?>
                 </div>
                 <div class="offset-6 col-1 mt-3">
                     <i class="fas fa-ellipsis-h"></i>
@@ -122,7 +133,7 @@ $count = $postBD->find()->count();
             <!-- Descrição -->
             <div class="row">
                 <div class="col-12 mt-3">
-                    <strong><?php echo $postItem->userPost; ?></strong>
+                    <strong><?php echo $postItem->User_post()->login; ?></strong>
                     <?php echo $postItem->descPost; ?>
                 </div>
             </div>

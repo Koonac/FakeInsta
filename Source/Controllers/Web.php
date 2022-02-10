@@ -1,20 +1,26 @@
 <?php
     namespace Source\Controllers;
-    use Source\Models\User;
-    use Source\Models\Post;
 
+use CoffeeCode\DataLayer\Connect;
+use Source\Models\User;
+    use Source\Models\Post;
 
 //classe web onde tera todas as funçoes ou controladores
     class Web {
         
         //=====================================
-        //  Function para trazer a pagona de home
+        //  Function para trazer a pagina de home
         //=====================================
         public function home($data){            
             //url base e dps um require puxando a pagina home
             $url = URL_BASE;
-            require __DIR__."/../Views/home.php";
-
+            session_start();
+            
+            if ((!isset($_SESSION['login']) == true) and (!isset($_SESSION['pass']) == true)) {
+                header("location: {$url}/");
+            }else{
+                require __DIR__."/../Views/home.php";
+            }
             
         }
 
@@ -24,7 +30,7 @@
         public function loginView(){
             $url = URL_BASE;
             session_start();
-            
+
             if ((isset($_SESSION['login']) == true) and (isset($_SESSION['pass']) == true)) {
                 header("location: {$url}/home");
             }else{
@@ -160,11 +166,59 @@
         }
 
         //=====================================
+        //Function para Deletar imagem de perfil
+        //=====================================
+        public function profileDelImage(){
+            $url = URL_BASE;
+            session_start();
+
+            $modelBD = (new User())->find("login= :login", "login={$_SESSION['login']}")->fetch();
+
+            // Deleta o FileImage
+            unlink(__DIR__ . "/../Views/upload/profile/$modelBD->image");
+
+            // função para deletar a imagem do BD
+            $delImageBD = Connect::getInstance()->prepare("UPDATE `user` SET `image` = null WHERE `user`.`id` = {$modelBD->id}");
+        
+            // Deleta a imagem do BD
+            $delImageBD->execute();
+
+            header("location: {$url}/profile");
+            
+        }
+        //=====================================
+        //Function para deletar o usuario logado
+        //=====================================
+        public function profileDelUser(){
+            $url = URL_BASE;
+            session_start();
+
+            $modelUser = (new User())->find("login= :login", "login={$_SESSION['login']}")->fetch();
+            $modelPost = (new Post())->find("id_userPost= :userPost", "userPost={$modelUser->id}")->fetch(true);
+
+            if(isset($modelPost)){
+                foreach($modelPost as $posts){
+                    $posts->destroy();
+                }
+            }
+            
+            session_unset();
+            $modelUser->destroy();
+
+            header("location: $url");
+
+        }
+
+        //=====================================
         //Function para exibir tela de erro de paginação
         //=====================================
         public function error($data){
             echo "<h1> OOOPS ocorreu um erro :( </h1>";
             echo "<h1>Error: {$data["errcode"]}</h1>";
             var_dump($data);
+        }
+
+        public function test2($data){
+            require __DIR__ . "/../teste2.php";
         }
     }

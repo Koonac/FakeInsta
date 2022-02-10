@@ -4,6 +4,8 @@ require __DIR__ . "/vendor/autoload.php";
 use Source\Models\User;
 use Source\Models\Post;
 
+$url = URL_BASE;
+session_start();
 // $postBD = new Post();
 // $listPost = $postBD->find("id_userPost = :uid", "uid=12")->fetch(true);
 
@@ -11,15 +13,15 @@ use Source\Models\Post;
 //     var_dump($post->userPost);
 // }
 
-$userBD = new User();
-$listUser = $userBD->find()->fetch(true);
-
+$postBD = new Post();
+$listPost = $postBD->find()->fetch(true);
 
 
 /** @var $users User */
-foreach ($listUser as $users){
-    var_dump($users->login);
+foreach ($listPost as $posts){
+    var_dump($posts->id_userPost);
     echo "<br>";
-    var_dump($users->posts());
+    var_dump($posts->User_post());
+    echo "<br>";
 }
-
+?>

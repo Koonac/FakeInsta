@@ -2,20 +2,16 @@
 namespace Source\Models;
 
 use CoffeeCode\DataLayer\DataLayer;
-use Example\Models\Address;
+use Source\Models\User;
 
 class Post extends DataLayer{
     public function __construct()
     {
-        parent::__construct("post", ["imagePost", "descPost", "userPost"], "id", false);
+        parent::__construct("post", ["imagePost", "descPost", "id_userPost"], "id", false);
     }
 
-    public function add(User $user, string $imagePost, string $descPost): Post
+    public function User_post()
     {
-        $this->id_userPost = $user->id;
-        $this->imagePost = $imagePost;
-        $this->descPost = $descPost;
-
-        return $this;
-    }   
+        return (new User())->find("id= :idUser", "idUser={$this->id_userPost}")->fetch();
+    }
 }

@@ -27,6 +27,9 @@ $router->post("/", "Web:homePost");
 $router->group("test");
 $router->get("/", "Web:test");
 
+$router->group("test2");
+$router->get("/", "Web:test2");
+
 //Rota Register
 $router->group("register");
 $router->get("/", "Web:register");
@@ -35,6 +38,8 @@ $router->post("/", "Web:registerSender");
 //Rota para fazer alterações no perfil
 $router->group("profile");
 $router->get("/", "Web:profile");
+$router->get("/deleteImage", "Web:profileDelImage");
+$router->get("/deleteUser", "Web:profileDelUser");
 
 //Rota para sair do Perfil logado
 $router->group("sair");
