@@ -7,7 +7,7 @@ use Source\Models\User;
 class Post extends DataLayer{
     public function __construct()
     {
-        parent::__construct("post", ["imagePost", "descPost", "id_userPost"], "id", false);
+        parent::__construct("post", ["imagePost", "id_userPost"], "id", false);
     }
 
     public function User_post()

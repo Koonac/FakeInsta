@@ -14,8 +14,15 @@ $userBD = $modelUser->find("login = :loginBD", "loginBD={$_SESSION['login']}")->
 // Verifica se o arquivo file esta vindo da Home.php
 // Ou...
 if(isset($_FILES['fileImage'])){
+    $postBD = new Post;
+
+    if(isset($_POST['descPost'])){
+        $descPost = $_POST['descPost'];
+        $postBD->descPost = $_POST['descPost'];
+        $postBD->save();
+    }
+
     $imagemPost = $_FILES['fileImage'];
-    $descPost = $_POST['descPost'];
 
     $extensao = strtolower(substr($imagemPost['name'], -4)); //pega a extensao do arquivo
     $novo_nome = md5(time()) . $extensao; //define o nome do arquivo
@@ -23,9 +30,7 @@ if(isset($_FILES['fileImage'])){
 
     move_uploaded_file($imagemPost['tmp_name'], $diretorio.$novo_nome); //efetua o upload
 
-    $postBD = new Post;
     $postBD->imagePost = $novo_nome;
-    $postBD->descPost = $_POST['descPost'];
     $postBD->id_userPost = $userBD->id;
     $postBD->save();
 

@@ -27,9 +27,6 @@ $router->post("/", "Web:homePost");
 $router->group("test");
 $router->get("/", "Web:test");
 
-$router->group("test2");
-$router->get("/", "Web:test2");
-
 //Rota Register
 $router->group("register");
 $router->get("/", "Web:register");
@@ -40,6 +37,8 @@ $router->group("profile");
 $router->get("/", "Web:profile");
 $router->get("/deleteImage", "Web:profileDelImage");
 $router->get("/deleteUser", "Web:profileDelUser");
+$router->post("/editUser", "Web:profileEditUser");
+
 
 //Rota para sair do Perfil logado
 $router->group("sair");
@@ -55,6 +54,6 @@ $router->get("/{errcode}", "Web:error");
 
 $router->dispatch();
 
-if($router->error()){
-    $router->redirect("/ooops/{$router->error()}");
-};
+// if($router->error()){
+//     $router->redirect("/ooops/{$router->error()}");
+// };

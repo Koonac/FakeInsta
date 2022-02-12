@@ -13,15 +13,26 @@ session_start();
 //     var_dump($post->userPost);
 // }
 
-$postBD = new Post();
-$listPost = $postBD->find()->fetch(true);
 
-
-/** @var $users User */
-foreach ($listPost as $posts){
-    var_dump($posts->id_userPost);
-    echo "<br>";
-    var_dump($posts->User_post());
-    echo "<br>";
-}
 ?>
+<script>
+    const fakeinsta = {
+        inscrever: function(){console.log("Voce se inscreveu")},
+        postar: function(post){console.log(post + "Voce fez um post")}
+    }
+</script>
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <button onclick="fakeinsta.inscrever()">Inscrever</button>
+    <button onclick="fakeinsta.postar('merda')">Postar</button>
+
+</body>
+</html>

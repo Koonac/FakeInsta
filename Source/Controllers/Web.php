@@ -49,15 +49,14 @@ use Source\Models\User;
             $user = strtolower($data{"user"});
             $pass = $data{"pass"};
 
-            $usersBD = new User;
+            $userBD = (new User())->find("login = :user", "user={$user}")->fetch();
 
-            $test = $usersBD->find("login = :user", "user={$user}")->fetch();
-            if ($test){
-                if ($test->login == $user && $test->senha == $pass){
+            if ($userBD){
+                if ($userBD->login == $user && $userBD->senha == md5($pass)){
                     
                     $_SESSION['login'] = $user;
                     $_SESSION['pass'] = $pass;
-                    $_SESSION['nome'] = $test->nome;
+                    $_SESSION['nome'] = $userBD->nome;
 
                     header("location: {$url}/home");
 
@@ -119,7 +118,7 @@ use Source\Models\User;
                     $usersBD->email = $data{"email"};
                     $usersBD->nome = $data{"name"};
                     $usersBD->login = $login;
-                    $usersBD->senha = $data{"pass"};
+                    $usersBD->senha = md5($data{"pass"});
 
                     $usersBD->save();
                     header("Location: {$url}");
@@ -210,6 +209,22 @@ use Source\Models\User;
         }
 
         //=====================================
+        //Function para editar dados do usuario
+        //=====================================
+        public function profileEditUser($data){
+            $url = URL_BASE;
+            session_start();
+
+            $modelUser = (new User())->find("login= :login", "login={$_SESSION['login']}")->fetch();
+
+            $modelUser->nome = $data['inputName'];
+            $modelUser->email = $data['inputEmail'];
+            
+            $modelUser->Save();
+            header("location: $url/profile");
+        }   
+
+        //=====================================
         //Function para exibir tela de erro de paginação
         //=====================================
         public function error($data){
@@ -218,7 +233,4 @@ use Source\Models\User;
             var_dump($data);
         }
 
-        public function test2($data){
-            require __DIR__ . "/../teste2.php";
-        }
     }

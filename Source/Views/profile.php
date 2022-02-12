@@ -10,14 +10,9 @@ $url = URL_BASE;
 ?>
 
 <script>
-    function openModal(){
-        var myModal = new bootstrap.Modal(document.getElementById('meuModal'), {})
-        myModal.toggle()
-    }
-    
-    function inputFile(){
-        var inputFile = document.getElementById("inputImage");
-        inputFile.click()
+    const fakeinsta = {
+        openModal: function() { (new bootstrap.Modal(document.getElementById('meuModal'), {})).toggle()},
+        inputFile: function() {document.getElementById("inputImage").click()}
     }
 
     function deleteBD($cmd){
@@ -29,6 +24,11 @@ $url = URL_BASE;
             console.log("DELETANDO USER")
             window.location.href = "<?php echo $url ?>/profile/deleteUser"
         }
+    }
+
+    function btnSave(){
+        var btn = document.getElementById("btnSaved")
+        btn.disabled = false
     }
     
 </script>
@@ -73,49 +73,52 @@ $url = URL_BASE;
                 <!-- Nome usuario com imagem Profile -->
                 <div class="col-3 mt-3">
                     <p class="fs-4"><?php echo $userProfile->login; ?></p>
-                    <p class="modalLink pointer" onclick="openModal()">Alterar foto de perfil</p>
+                    <p class="modalLink pointer" onclick="fakeinsta.openModal()">Alterar foto de perfil</p>
                 </div>
             </div>
 
             <!-- Nome Profile -->
-            <div class="row mt-3">
-                <div class="offset-2 col-2">
-                    <strong>Nome</strong>
-                </div>
-                <div class="col-5">
-                    <input class="form-control" type="text" value="<?php echo $userProfile->nome; ?>">
-                </div>
-            </div>
-
-            <!-- Nome de usuario Profile -->
-            <div class="row mt-3">
-                <div class="offset-2 col-2">
-                    <strong>Nome de Usúario</strong>
-                </div>
-                <div class="col-5">
-                    <input class="form-control" type="text" value="<?php echo $userProfile->login; ?>" disabled readonly>
-                </div>
-            </div>
-
-
-            <!-- Email profile -->
-            <div class="row mt-3">
-                <div class="offset-2 col-2">
-                    <strong>Email</strong>
+            <form action="<?= $url?>/profile/editUser" method="post">
+                <div class="row mt-3">
+                    <div class="offset-2 col-2">
+                        
+                        <strong>Nome </strong>
+                    </div>
+                    <div class="col-5">
+                        <input class="form-control" type="text" id="inputName" onchange="btnSave()" name="inputName" value="<?php echo $userProfile->nome; ?>">
+                    </div>
                 </div>
 
-                <div class="col-5">
-                    <input class="form-control" type="text" value="<?php echo $userProfile->email; ?>">
+                <!-- Nome de usuario Profile -->
+                <div class="row mt-3">
+                    <div class="offset-2 col-2">
+                        <strong>Nome de Usúario</strong>
+                    </div>
+                    <div class="col-5">
+                        <input class="form-control" type="text" value="<?php echo $userProfile->login; ?>" disabled readonly>
+                    </div>
                 </div>
-            </div>
 
 
-            <!-- Botões do rodapé -->
+                <!-- Email profile -->
+                <div class="row mt-3">
+                    <div class="offset-2 col-2">
+                        <strong>Email</strong>
+                    </div>
 
-            <div class="mb-4 position-absolute bottom-0 start-50 translate-middle">
-                <button type="button" class="btn btn-primary me-5" disabled>Save</button>
-                <a class="text-decoration-none fw-bolder ms-5 pointer" data-bs-target="#delUser" data-bs-toggle="modal">Excluir conta permanentemente</a>
-            </div>
+                    <div class="col-5">
+                        <input class="form-control" type="email" id="inputEmail" onchange="btnSave()" name="inputEmail" value="<?php echo $userProfile->email; ?>">
+                    </div>
+                </div>
+
+                <!-- Botões do rodapé -->
+                <div class="mb-4 position-absolute bottom-0 start-50 translate-middle">
+                    <button type="submit" class="btn btn-primary me-5" id="btnSaved" disabled>Save</button>
+
+                    <a class="text-decoration-none fw-bolder ms-5 pointer" data-bs-target="#delUser" data-bs-toggle="modal">Excluir conta permanentemente</a>
+                </div>
+            </form>
+
 
                 <!-- Modal para alterar foto de perfil -->
             <div class="modal fade" id="meuModal" tabindex="-1" aria-labelledby="ExemploDeModal" aria-hidden="true">
@@ -139,7 +142,7 @@ $url = URL_BASE;
                             </div>
                         </div>
 
-                        <div class="modal-body modalHover" onclick="inputFile()">
+                        <div class="modal-body modalHover" onclick="fakeinsta.inputFile()">
                             <p id="textImage" class="text-center m-0 fw-bold">Carregar imagem</p>
                             <form enctype="multipart/form-data" 
                             method="post" 
