@@ -75,7 +75,7 @@ Span{
 
 .posts{
     background-color: white;
-    height: 740px;
+    min-height: 740px;
 
 }
 
@@ -115,4 +115,13 @@ Span{
     height: 100%;
     object-fit: cover;
     border-radius: 100%;
+}
+
+.noBorder{
+    border: none;
+
+}
+
+.inputComment{
+    width: 100%;
 }

@@ -3,7 +3,7 @@
 
 use CoffeeCode\DataLayer\Connect;
 use Source\Models\User;
-    use Source\Models\Post;
+use Source\Models\Post;
 
 //classe web onde tera todas as funçoes ou controladores
     class Web {

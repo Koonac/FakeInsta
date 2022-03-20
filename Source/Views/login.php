@@ -19,7 +19,7 @@
         <form action="<?=$url;?>/" method="post" class="col-3 flex-wrap text-center border mt-4 mb-2 px-4 bg-white border-primary">
             <h1 class="form-group mt-3">FakeInsta</h1>
             <div class="form-group mt-3">
-                <input type="text" name="user" id="user" class="form-control mb-1" placeholder="Telefone, nome de usuário ou email" required>
+                <input type="text" name="user" id="user" class="form-control mb-1" placeholder="Digite seu usuário" required>
                 <input type="password" name="pass" id="pass" class="form-control mb-2" placeholder="Senha" required>
                 <button type="submit" class="btn btn-primary mb-3">Entrar</button>
             </div>

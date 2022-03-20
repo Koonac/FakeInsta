@@ -10,7 +10,7 @@ $url = URL_BASE;
 ?>
 
 <script>
-    const fakeinsta = {
+    let fakeinsta = {
         openModal: function() { (new bootstrap.Modal(document.getElementById('meuModal'), {})).toggle()},
         inputFile: function() {document.getElementById("inputImage").click()}
     }
@@ -61,7 +61,7 @@ $url = URL_BASE;
 
             <!-- Imagem Profile -->
             <div class="row mt-3">
-                <div class="offset-2 col-2 border">
+                <div class="offset-2 col-2">
                     <?php
                         if($userProfile->image == null){
                             echo "<i class='far fa-user-circle fa-4x m15'></i>";

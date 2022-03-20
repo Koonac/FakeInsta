@@ -38,14 +38,16 @@ $userProfile = $userBD->find("login= :login", "login={$_SESSION['login']}")->fet
                 <div class="offset-1 col-1">
                     <i class="far fa-heart fa-lg m15"></i>
                 </div>
-                <div class="offset-1 col-2 pb-3 border">
-                    <?php
-                        if($userProfile->image == null){
-                            echo "<i class='far fa-user-circle fa-lg m15'></i>";
-                        }else{
-                            echo "<img class='img' src='Source/Views/upload/profile/$userProfile->image'>";  
-                            }
-                    ?>
+                <div class="offset-1 col-2 pb-3">
+                    <a class="text-decoration-none" href="<?php echo $url ?>/profile">
+                        <?php
+                            if($userProfile->image == null){
+                                echo "<i class='far fa-user-circle fa-lg m15'></i>";
+                            }else{
+                                echo "<img class='img' src='Source/Views/upload/profile/$userProfile->image'>";  
+                                }
+                        ?>
+                    </a>
                 </div>
             </div>
         </div>

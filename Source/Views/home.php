@@ -4,6 +4,9 @@ $logado = $_SESSION['login'];
 $nomeUser = $_SESSION['nome'];
 
 use Source\Models\Post;
+use Source\Models\Comments;
+
+$modelComments = new Comments;
 
 $postBD = new Post;
 $dataBD = $postBD->find()->order("id DESC")->fetch(true);
@@ -24,6 +27,8 @@ $count = $postBD->find()->count();
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Grand+Hotel&display=swap" rel="stylesheet">
     <script src="https://kit.fontawesome.com/dd928c7064.js" crossorigin="anonymous"></script>
+    <script src="Source/Controllers/JS/jquery-3.6.0.min.js"></script>
+    <script src="Source/Controllers/JS/myScript.js"></script>
 
     <title>FakeInsta</title>
     
@@ -96,7 +101,7 @@ $count = $postBD->find()->count();
                 <div class="col-1 pt-3">
                     <?php
                         if($postItem->User_post()->image == null){
-                            echo "<i class='far fa-user-circle fa-2x m15'></i>";
+                            echo "<i class='far fa-user-circle fa-2x'></i>";
                         }else{
                             echo "<img class='img' src='Source/Views/upload/profile/{$postItem->User_post()->image}'>";  
                             }
@@ -113,7 +118,7 @@ $count = $postBD->find()->count();
             <!-- Imagem -->
             <div class="row">
                 <div class="mt-2">
-                    <img class="imagePost"src="Source/Views/upload/post/<?php echo $postItem->imagePost; ?>" alt="">
+                    <img class="imagePost" src="Source/Views/upload/post/<?php echo $postItem->imagePost; ?>" alt="">
                 </div>
             </div>
 
@@ -138,18 +143,47 @@ $count = $postBD->find()->count();
                 </div>
             </div>
 
-            <!-- Comentarios -->
-            <div class="row border-top mt-3">
-                <div class="col-1 pt-2">
-                    <i class="far fa-smile fa-lg m15"></i>
-                </div>
-                <div class="col-9 pt-2">
-                    <span>Adicione um comentário...</span>
+                            <!-- View de comentarios -->
+            <div id="comment<?= $postItem->id; ?>" class="row border-top mt-3 ps-3">
+                <?php 
+                    $postComments = $modelComments->find("id_post= :uid", "uid={$postItem->id}")->fetch(true);
+                    if(!isset($postComments)){
+                        echo "<p class='fw-light m-0'>Nenhum comentário...</p>";
+                    }else{
+                        foreach($postComments as $commentItem){
+                            echo "
+                                <div class='row mb-2'>
+                                    <div class='col-1'>
+                                ";
+                                if($commentItem->commentUser()->image == null){
+                                        echo "<i class='img far fa-user-circle '></i>";
+                                    }else{
+                                        echo "<img class='img' src='Source/Views/upload/profile/{$commentItem->commentUser()->image}'>";
+                                    }
+                                echo "
+                                    </div>
+                                    <div class='col-2'>
+                                        <strong>{$commentItem->commentUser()->login}</strong>
+                                    </div>
+                                    <div class='col-8 ms-2 fw-light'>
+                                        {$commentItem->comment}
+                                    </div>
+                                </div>
+                            ";
+                        }
+                    }
+                ?>
+            </div>
+
+            <!-- Postar Comentarios -->
+            <form class="row border-top mt-3">
+                <div class="col-10 pt-2">
+                    <input id="<?= $postItem->id; ?>" class="inputComment noBorder" type="text" placeholder="Adicione um comentário...">
                 </div>
                 <div class="col-2 pt-2">
-                    <a href="">Publicar</a>
+                    <a id="commentPublic" onclick="sendComment(<?= $postItem->id?>)" class="text-decoration-none pointer">Publicar</a>
                 </div>
-            </div>
+            </form>
         </div>
     </div>
 
